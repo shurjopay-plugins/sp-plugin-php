@@ -9,7 +9,8 @@
       $shurjopay_order_id = trim($_REQUEST['order_id']);
       $response_data = json_decode($sp_instance->verifyOrder($shurjopay_order_id));
   }
-
+  
+  // print_r($response_data);exit;
 
 
 
@@ -43,7 +44,7 @@
             				<td><?php print_r ($val);?></td>
             			</tr>
             		<?php
-
+                    
             			endforeach;
             			endif;
                   

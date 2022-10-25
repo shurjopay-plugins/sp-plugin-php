@@ -10,7 +10,6 @@
       'currency' => 'BDT',
       'amount' => $amount,                
       // Order information
-      'order_id' => $prefix.uniqid(),
       'discsount_amount' => 0,
       'disc_percent' => 0,
       // Customer information
