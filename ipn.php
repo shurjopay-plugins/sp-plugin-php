@@ -1,16 +1,21 @@
 <?php
-
-  require_once 'ShurjopayPlugin.php';
-  $sp_instance = new ShurjopayPlugin();
+ require_once 'ShurjopayPlugin.php';
+  $spObject = new ShurjopayPlugin();
   $response_data = (object) array('Status'=>'No data found');
 
-  if($_REQUEST['order_id'])
+  if($_REQUEST['oid'])
   {
-      $shurjopay_order_id = trim($_REQUEST['order_id']);
-      $response_data = json_decode(json_encode($sp_instance->verifyOrder($shurjopay_order_id)));
+      $shurjopay_order_id = trim($_REQUEST['oid']);
+      $response_data = json_decode(json_encode($spObject->verifyOrder($shurjopay_order_id)));
   }
-  
-   //print_r($response_data);exit;
+//print_r($response_data);exit();
+
+  try {
+      $logmsg = "\n".date("Y.n.j H:i:s")."#".json_encode($response_data);
+      file_put_contents(date("Y.n.j").'.log',$logmsg,FILE_APPEND);
+      } catch(Exception $e) {
+        file_put_contents(date("Y.n.j").'.log',$e->getMessage(),FILE_APPEND);
+      }
 
 
 
@@ -49,7 +54,7 @@
             			endif;
                   
             		?>
-            		<tr><td colspan="2"><a href="./index.php"><b>Back</b></td></tr>
+            		<tr><td colspan="2"><a href="./ipnview.php"><b>Back</b></td></tr>
             	</table>
             
           </div>
