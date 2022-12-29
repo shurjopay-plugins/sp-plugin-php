@@ -33,10 +33,6 @@ function checkInternetConnection()
 function Validation($payload_data)
 {
     $payload_data = (json_decode($payload_data));
-    if ($payload_data->amount == '0') {
-        print_r("shurjoPay don't accept 0 amount");
-        exit;
-    }
 
     return (
         emptyCheck(
@@ -92,6 +88,8 @@ function Validation($payload_data)
  */
 function emptyCheck($type, $data)
 {
+    var_dump($data);
+    
     if ($data == null || $data == "") {
         print_r("$type is null or empty");
     } else {
