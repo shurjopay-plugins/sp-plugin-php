@@ -5,7 +5,7 @@ require_once 'ShurjopayValidation.php';
 
 /**
  * PHP plugin class to connect and integrate with shurjoPay payment gateway API.
- * There are three mendatory public functions which will need to access shurjoPay.<br>
+ * There are three mandatory public functions which will need to access shurjoPay.<br>
  * 1. authenticate()-> makes client authenticate
  * 2. makePayment()-> generates payment url for checkout
  * 3. verifyPayment()-> makes payment verification
@@ -27,9 +27,6 @@ class ShurjopayPlugin
         $this->authentication_url = SHURJOPAY_API . "api/get_token";
         $this->checkout_url = SHURJOPAY_API . "api/secret-pay";
         $this->verification_url = SHURJOPAY_API . "api/verification";
-        $this->LOG_LOCATION = !str_contains(SP_LOG_LOCATION, "sp-plugin-php")
-            ? SP_LOG_LOCATION . "sp-plugin-php" : SP_LOG_LOCATION;
-        $this->LOG_FILE = $this->LOG_LOCATION . "shurjopay-plugin.log";
     }
 
     public function authenticate()
@@ -47,6 +44,7 @@ class ShurjopayPlugin
             return null;
         }
         $response = json_decode(json_encode($response), true);
+        $this->sp_log("Token generated Successfully");
         $this->SP_TOKEN = $response['token'];
         $this->SP_STORE = $response['store_id'];
         return $this->SP_TOKEN;
@@ -55,7 +53,7 @@ class ShurjopayPlugin
     public function makePayment($payload)
     {
         if (!checkInternetConnection()) {
-            
+
             exit("Your have no internet connection! Please check your internet connection.");
         }
         $this->check_token("Payment process can not continue as no authentication token is available");
@@ -84,7 +82,8 @@ class ShurjopayPlugin
         }
     }
 
-    private function check_token($msg) {
+    private function check_token($msg)
+    {
         if (!$this->SP_TOKEN) {
             $this->SP_TOKEN = $this->authenticate();
             if (!$this->SP_TOKEN) {
@@ -105,7 +104,7 @@ class ShurjopayPlugin
         $postFields = json_encode(array('order_id' => $shurjopay_order_id));
         try {
             $response = $this->getHttpResponse($this->verification_url, 'POST', $postFields, $header);
-            $this->sp_log("Payment verification for ".$shurjopay_order_id." was done successfully");
+            $this->sp_log("Payment verification for " . $shurjopay_order_id . " was done successfully");
             return $response;
         } catch (Exception $e) {
             $this->sp_log("Invalid order id: " . $shurjopay_order_id . ". \n" . $e->getMessage());
@@ -115,36 +114,36 @@ class ShurjopayPlugin
 
     public function prepareTransactionPayload($payload)
     {
-       
+
         return json_encode(
             array(
-              // store information
-              'token' => $this->SP_TOKEN,
-              'store_id' => $this->SP_STORE,
-              'prefix' => SP_PREFIX,
-              'currency' => $payload->currency,
-              'return_url' => SP_CALLBACK,
-              'cancel_url' => SP_CALLBACK,
-              'amount' => $payload->amount,
-              // Order information
-              'order_id' => SP_PREFIX . uniqid(),
-              'discsount_amount' => $payload->discount_amount,
-              'disc_percent' => $payload->disc_percent,
-              // Customer information
+                # store information
+                'token' => $this->SP_TOKEN,
+                'store_id' => $this->SP_STORE,
+                'prefix' => SP_PREFIX,
+                'currency' => $payload->currency,
+                'return_url' => SP_CALLBACK,
+                'cancel_url' => SP_CALLBACK,
+                'amount' => $payload->amount,
+                # Order information
+                'order_id' => SP_PREFIX . uniqid(),
+                'discsount_amount' => $payload->discountAmount,
+                'disc_percent' => $payload->discPercent,
+                # Customer information
                 'client_ip' => $_SERVER['REMOTE_ADDR'] ?: ($_SERVER['HTTP_X_FORWARDED_FOR'] ?: $_SERVER['HTTP_CLIENT_IP']),
-                'customer_name' => $payload->customer_name,
-                'customer_phone' => $payload->customer_phone,
-                'customer_email' => $payload->customer_email,
-                'customer_address' => $payload->customer_address,
-                'customer_city' => $payload->customer_city,
-                'customer_state' => $payload->customer_state,
-                'customer_postcode' => $payload->customer_postcode,
-                'customer_country' => $payload->customer_country,
-                'shipping_address'=> $payload->shipping_address,
-                'shipping_city'=> $payload->shipping_city,
-                'shipping_country'=> $payload->shipping_country,
-                'received_person_name'=> $payload->received_person_name,
-                'shipping_phone_number'=> $payload->shipping_phone_number,
+                'customer_name' => $payload->customerName,
+                'customer_phone' => $payload->customerPhone,
+                'customer_email' => $payload->customerEmail,
+                'customer_address' => $payload->customerAddress,
+                'customer_city' => $payload->customerCity,
+                'customer_state' => $payload->customerState,
+                'customer_postcode' => $payload->customerPostcode,
+                'customer_country' => $payload->customerCountry,
+                'shipping_address' => $payload->shippingAddress,
+                'shipping_city' => $payload->shippingCity,
+                'shipping_country' => $payload->shippingCountry,
+                'received_person_name' => $payload->receivedPersonName,
+                'shipping_phone_number' => $payload->shippingPhoneNumber,
                 'value1' => $payload->value1,
                 'value2' => $payload->value2,
                 'value3' => $payload->value3,
@@ -197,22 +196,28 @@ class ShurjopayPlugin
 
     public function sp_log($log_msg)
     {
-        if (!isset($this->LOG_LOCATION)) return;
-        if (!file_exists($this->LOG_FILE)) {
-            if (!mkdir($this->LOG_LOCATION, 0775, true)) {
-                error_log("Failed to create directory at " . $this->LOG_LOCATION);
-                unset($this->LOG_LOCATION);
-            }
-        }
-        $log_msg = gmdate('Y-m-d H:i:s') . " ShurjopayPlugin: " . $log_msg;
-        file_put_contents($this->LOG_FILE, $log_msg . "\n", FILE_APPEND);
-    }
-}
 
-// Polyfill for PHP 4 - PHP 7, safe to utilize with PHP 8
-if (!function_exists('str_contains')) {
-    function str_contains($haystack, $needle)
-    {
-        return empty($needle) || strpos($haystack, $needle) !== false;
+        try {
+            #file_put_contents takes care of opening the file, writing the contents, and closing the file.
+            $log_file_data = SP_LOG_LOCATION . 'shurjopay-plugin-log' . '/shurjoPay-plugin' . '.log';
+            $log_msg_first = gmdate('Y-m-d H:i:s') . " ShurjopayPlugin: " . $log_msg;
+            $log_write = file_put_contents($log_file_data, $log_msg_first . "\n", FILE_APPEND);
+            #If failed to write log.
+            if (!$log_write) {
+                #This will check the folder for the 1st time.
+                #Check log folder exists or not if not then it will create folder and write on it.
+                if (!file_exists(SP_LOG_LOCATION . 'shurjopay-plugin-log')) {
+                    mkdir(SP_LOG_LOCATION . 'shurjopay-plugin-log', 0777, true);
+                    $log_msg = gmdate('Y-m-d H:i:s') . " ShurjopayPlugin: " . $log_msg;
+                    $log_write = file_put_contents($log_file_data, $log_msg . "\n", FILE_APPEND);
+                }
+
+            }
+
+
+        } catch (Exception $e) {
+
+            return $e->getMessage();
+        }
     }
 }

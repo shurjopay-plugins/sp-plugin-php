@@ -12,4 +12,4 @@ define('SHURJOPAY_API', 'https://sandbox.shurjopayment.com/', false);
 /** URL to redirect after completion of a payment */
 define('SP_CALLBACK', 'http://localhost/php-app-php-plugin/return.php', false);
 /** Log location of shurjopay php plugin */
-define('SP_LOG_LOCATION', '/var/log/sp-plugin-php/', false);
+define('SP_LOG_LOCATION', '', false);

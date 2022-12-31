@@ -88,8 +88,7 @@ function Validation($payload_data)
  */
 function emptyCheck($type, $data)
 {
-    var_dump($data);
-    
+ 
     if ($data == null || $data == "") {
         print_r("$type is null or empty");
     } else {
