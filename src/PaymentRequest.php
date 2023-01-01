@@ -1,5 +1,4 @@
 <?php
-
 /**
  * PHP plugin class PaymentRequest to store payload values.
  *

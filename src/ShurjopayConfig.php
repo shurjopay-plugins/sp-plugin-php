@@ -1,4 +1,5 @@
 <?php
+
 // Configuration constants for shurjopay plugin
 
 /** shurjopay merchant username */

@@ -1,0 +1,26 @@
+{
+    "name": "shurjomukhi/shurjopay-php-plugin",
+    "description": "shurjopay is a online payment gateway and easy payment solution",
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["shurjopay-payment-gateway", "shurjopay-PHP-package","shurjopay-PHP","PHP-shurjopay"],
+    "autoload": {
+        "psr-4": {
+            "Shurjomukhi\\ShurjopayPhpPlugin\\": "src/"
+        }
+    },
+	 "minimum-stability": "dev",
+     "authors": [
+        {
+            "name": "Shurjomukhi Ltd",
+            "email": "plugindev@shurjomukhi.com.bd"
+        },
+        {
+            "name": "Md Wali Mosnad Ayshik",
+            "email": "ayshik.wali@shurjomukhisolutions.com.bd",
+            "role": "Software Engineer"
+        }
+        
+    ],
+    "require": {}
+}
