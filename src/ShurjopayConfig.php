@@ -1,4 +1,5 @@
 <?php
+namespace ShurjopayPlugin\ShurjopayConfig;
 
 // Configuration constants for shurjopay plugin
 
@@ -13,4 +14,4 @@ define('SHURJOPAY_API', 'https://sandbox.shurjopayment.com/', false);
 /** URL to redirect after completion of a payment */
 define('SP_CALLBACK', 'http://localhost/php-app-php-plugin/return.php', false);
 /** Log location of shurjopay php plugin */
-define('SP_LOG_LOCATION', '', false);
+define('SP_LOG_LOCATION', 'shurjoPay-plugin-log/', false);
