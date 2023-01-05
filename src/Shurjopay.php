@@ -85,7 +85,7 @@ class Shurjopay
                 } else {
                     return $response; //object
                 }
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 return $e->getMessage();
             }
         }
@@ -115,7 +115,7 @@ class Shurjopay
             $response = $this->getHttpResponse($this->verification_url, 'POST', $postFields, $header);
             $this->sp_log("Payment verification for " . $shurjopay_order_id . " was done successfully");
             return $response;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->sp_log("Invalid order id: " . $shurjopay_order_id . ". \n" . $e->getMessage());
             return $e->getMessage();
         }
@@ -195,7 +195,7 @@ class Shurjopay
             );
             $response = curl_exec($curl);
             return (json_decode($response));
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->sp_log("Shurjopay plugin has failed to initialize Curl! \n" . $e->getMessage());
         } finally {
             curl_close($curl);
