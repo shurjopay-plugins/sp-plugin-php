@@ -1,87 +1,130 @@
-![image](https://user-images.githubusercontent.com/57352037/170198396-932692aa-3354-4cf0-abc1-2b8ef43a6de3.png)
-# ShurjoPay
+# ![shurjoPay](https://shurjopay.com.bd/dev/images/shurjoPay.png) PHP plugin package
 
-Shurjopay raw-php integration steps
-## Prerequisite
-To integrate ShurjoPay you need few credentials to access shurjopay:
+![Made With](https://badgen.net/badge/Made%20with/PHP)
+[![Test Status](https://github.com/rust-random/rand/workflows/Tests/badge.svg?event=push)]()
+![NPM](https://img.shields.io/npm/l/sp-plugin)
+![version](https://badgen.net/badge/version/0.1.0)
+
+Official shurjoPay PHP plugin for merchants or service providers to connect with [**_shurjoPay_**](https://shurjopay.com.bd) Payment Gateway v2.1 developed and maintained by [_**ShurjoMukhi Limited**_](https://shurjomukhi.com.bd).
+
+This plugin package can be used with any PHP application or framework (e.g. Laravel, Symfony, CodeIgniter etc).
+Also it makes it easy for developers to integrate with shurjoPay v2.1 with just three API calls:
+
+1. **authenticate**: Authenticate merchants and generate token
+1. **makePayment**: Create and send payment request
+1. **verifyPayment**: Verify payment status at shurjoPay
+
+
+Also reduces many of the things that you had to do manually
+
+- Handles http request and errors
+- Log generation at your prefarable path
+- Authentication during checkout and verification of payments
+
+## Audience
+
+This document is intended for the developers and technical personnel of merchants and service providers who want to integrate the shurjoPay online payment gateway using PHP.
+
+# How to use this shurjoPay Plugin
+
+To integrate the shurjoPay Payment Gateway in your PHP project do the following tasks sequentially.
+
+#### Step 1: Install the plugin inside your project environment
+
 ```
-:param prefix: Any string not more than 5 characters. It distinguishes the stores of a merchant.
-:param currency: ISO format,(only BDT and USD are allowed).
-:param return_url: Merchant should provide a GET Method return url to verify users initiated transaction status. 
-:param cancel_url: Merchant should provide a cancel url to redirect the user if he/she cancels the transaction in midway. 
-:param client_ip: User's ip
-:param username: Merchant Username provided by shurjopay.
-:param password: Merchant Password provided by shurjopay.
-:param post_address: Live shurjopay version 2 URL.
+coming soon
+```
+OR
+
+#### Step 1: Download the plugin from [shurjoPay-Plugins-PHP](https://github.com/shurjopay-plugins/sp-plugin-php)<br><br>
+
+#### Step 2: Setup configuration parameters for shurjopay plugin correctly in your application.
+
+<!-- e.g. SP_USERNAME, SP_PASSWORD, SP_PREFIX for the order id, SHURJOPAY_API, SP_CALLBACK and SP_LOG_LOCATION.<br /> -->
+* Inside the [shurjoPay-Plugins-PHP](https://github.com/shurjopay-plugins/sp-plugin-php), <b>ShurjopayConfig.php</b> is provided with shurjoPay sandbox(test) credentials.<br />
+* Provide your live credentials in <b>ShurjopayConfig.php</b> before going live.
+```PHP
+# shurjopay merchant username
+define('SP_USERNAME', 'sp_sandbox', false);
+# shurjopay merchant password
+define('SP_PASSWORD', 'pyyk97hu&6u6', false);
+# Merchant prefix used to generate order id
+define('SP_PREFIX', 'NOK', false);
+# shurjopay payment gateway API endpoint
+define('SHURJOPAY_API', 'https://sandbox.shurjopayment.com/', false);
+# URL to redirect after completion of a payment
+define('SP_CALLBACK', 'https://sandbox.shurjopayment.com/response', false);
+# Log location of shurjopay php plugin
+define('SP_LOG_LOCATION', 'shurjoPay-plugin-log/', false);
 ```
 
+#### Step 3: Use the namespace and require_once from package in your code as necessary and initiate payment method.
 
-> 📝 **NOTE** For shurjoPay version 2 live engine integration's all necessary credential will be given to merchant after subscription completed on shurjoPay gateway.
+```PHP
+use ShurjopayPlugin\Shurjopay;
+use ShurjopayPlugin\PaymentRequest;
+
+require_once '(According to package location)/Shurjopay.php';
+require_once '(According to package location)/PaymentRequest.php';
+```
+
+```PHP
+$sp_instance = new Shurjopay();
+$request = new PaymentRequest();
+# All the data will come from user end.
+$request->currency = 'BDT';
+$request->amount = 100;
+$request->discountAmount = '0';
+$request->discPercent = '0';
+$request->customerName = 'MD Wali Mosnad Ayshik';
+$request->customerPhone = '01775503498';
+$request->customerEmail = 'test@gmail.com';
+$request->customerAddress = 'Dhaka';
+$request->customerCity = 'Dhaka';
+$request->customerState = 'Dhaka';
+$request->customerPostcode = '1207';
+$request->customerCountry = 'Bangladesh';
+$request->shippingAddress = 'Sirajganj';
+$request->shippingCity = 'Dhaka';
+$request->shippingCountry = 'Bangladesh';
+$request->receivedPersonName = 'Ayshik';
+$request->shippingPhoneNumber = '01775503498';
+# These are custom value for additional data.
+$request->value1 = 'value1';
+$request->value2 = 'value2';
+$request->value3 = 'value3';
+$request->value4 = 'value4';
+# Initiate payment method.
+$sp_instance->makePayment($request);
+```
+
+Checkout this [PHP project](https://github.com/shurjopay-plugins/sp-plugin-usage-examples/tree/main/php-app-php-plugin/php-app-php-plugin) to see this plugin in action.
 
 
-### PHP shurjoPay(V2) Plugin ###
-	This repository is to integrate shurjoPay with Raw PHP.
-	
-	
-### How do I get set up? ###
-	## Step 1: ##
-	Upload all the files of this repository to your web root(i.e. localhost or your-domain-name).
-	It is recommended to create a shurjopay folder and upload the files within it. 
-	(i.e. localhost/<YOUR-PROJECT-NAME>/shurjopay/index.php OR your-domain-name/shurjopay/index.php)
-	Go to browser and point the folder (i.e. localhost/shurjopay/ )your need.
-	
-	## Step 2: ##
-		Set up the config.php file with the live credentials given to you after getting on-boarded with shurjoPay.
-		For example:
-			define('USERNAME','<USERNAME-PROVIDED-BY-SHURJOPAY>');
-			define('PASSWORD','<PASSWORD-PROVIDED-BY-SHURJOPAY>');
-			define('TESTMODE', FALSE);
-			define('PREFIX','NOK');
+ Payment verification can be done after each transaction with shurjopay order id.<br />
+#### Step 1: Use the namespace and require_once from package in your code for payment verification.
+```PHP
+use ShurjopayPlugin\Shurjopay;
 
-		Note that, if you are trying to integrate with sandbox then do not change anything in config.php.
-	
-	## Step 3: ##
-		Change the $return_url before passing the checkout form data.
-		For reference, check the sp.php file.
-		For example: $return_url = 'http://localhost/<YOUR-PROJECT-FOLDER-NAME>/shurjopay/return.php';
-		(You can customize the return.php file with the necessary front-end utilities if you like to.)
+require_once '(According to package location)/Shurjopay.php';
+```
+```PHP
+$shurjopay_order_id = trim($_REQUEST['order_id']);
+$response_data = json_decode(json_encode($sp_instance->verifyPayment($shurjopay_order_id)));
+```
 
-	## Step 4: ##
-		Call the "generate_shurjopay_form($payload)" function and pass the necessary checkout datas as an array parameter in it.
-		For reference, check the sp.php file.
-		Example of the $payload:
-		$payload = array(
-		      'currency' => 'BDT',
-		      'return_url' => $return_url,
-		      'cancel_url' => $return_url,
-		      'amount' => $amount,                
-		      // Order information
-		      'prefix' => 'NOK',
-		      'order_id' => '42',
-		      'discsount_amount' => 0,
-		      'disc_percent' => 0,
-		      // Customer information
-		      'client_ip' => '127.0.0.1',                
-		      'customer_name' =>  'CUSTOMER NAME',
-		      'customer_phone' => '01818555555',
-		      'email' => 'test@example.com',
-		      'customer_address' => 'Dhaka',                
-		      'customer_city' => 'Dhaka',
-		      'customer_state' => 'Dhaka',
-		      'customer_postcode' => '1207',
-		      'customer_country' => 'Bangladesh',
-		      'value1' => 'value1',
-		      'value2' => 'value2',
-		      'value3' => 'value3',
-		      'value4' => 'value4'
-		  );
+## References
 
-		
+1. [PHP sample project](https://github.com/shurjopay-plugins/sp-plugin-usage-examples/tree/main/php-app-php-plugin/php-app-php-plugin) showing usage of the PHP plugin.
+2. [Laravel sample project using PHP plugin](https://github.com/shurjopay-plugins/sp-plugin-usage-examples/tree/dev/laravel_app_php_plugin) to get your feet wet with shurjopay.
+3. [Sample applications and projects](https://github.com/shurjopay-plugins/sp-plugin-usage-examples) in many different languages and frameworks showing shurjopay integration.
+4. [shurjoPay Postman site](https://documenter.getpostman.com/view/6335853/U16dS8ig) illustrating the request and response flow using the sandbox system.
+5. [shurjopay Plugins](https://github.com/shurjopay-plugins) home page on github
 
-### Postmane Documentations
+## License
 
-    This document will illustrate the overall request and response flow.
-    URL : https://documenter.getpostman.com/view/6335853/U16dS8ig	
-		
-### Who do I talk to? ###
-	For any technical assistance please contact to: https://shurjopay.com.bd/#contacts
+This code is under the [MIT open source License](http://www.opensource.org/licenses/mit-license.php).
+
+#### Please [contact](https://shurjopay.com.bd/#contacts) with shurjoPay team for more detail.
+
+Copyright ©️2022 [ShurjoMukhi Limited](https://shurjomukhi.com.bd).
