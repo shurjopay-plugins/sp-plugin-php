@@ -4,7 +4,7 @@
     "type": "library",
     "version": "2.1.0",
     "license": "MIT",
-    "keywords": ["shurjopay-payment-gateway", "shurjopay-PHP-package","shurjopay-PHP","PHP-shurjopay"],
+    "keywords": ["php","laravel","shurjopay","shurjomukhi","shurjopay-plugin","payment-gateway","payments","codeigniter","symphony"],
     "autoload": {
         "psr-4": {
             "ShurjopayPlugin\\": "src/"
