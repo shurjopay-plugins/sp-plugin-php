@@ -12,8 +12,19 @@
     },
     "authors": [
         {
-            "name": "Shurjomukhi Ltd"
+            "name": "Shurjomukhi Ltd",
+            "email": "plugindev@shurjomukhi.com.bd"
+        },
+        {
+            "name": "Md Wali Mosnad Ayshik",
+            "email": "ayshik.wali@shurjomukhisolutions.com.bd",
+            "role": "Software Engineer"
+        },
+        {
+            "name": "Rayhan Khan Ridoy",
+            "email": "redoy@shurjomukhisolutions.com.bd",
+            "role": "Software Engineer"
         }
-    ],
+     ],
     "require": {}
 }
