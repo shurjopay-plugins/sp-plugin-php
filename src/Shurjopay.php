@@ -1,11 +1,12 @@
 <?php
+
 namespace ShurjopayPlugin;
 
 use ShurjopayPlugin\ShurjopayValidation;
 
- require_once 'ShurjopayConfig.php';
- require_once 'ShurjopayValidation.php';
-
+require_once 'ShurjopayException.php';
+require_once 'ShurjopayConfig.php';
+require_once 'ShurjopayValidation.php';
 
 /**
  * PHP plugin class to connect and integrate with shurjoPay payment gateway API.
@@ -16,6 +17,7 @@ use ShurjopayPlugin\ShurjopayValidation;
  * prepareCurlRequest, prepareTransactionPayload & logInfo() are internally.
  *
  * @author Md Wali Mosnad Ayshik
+ * @author Rayhan khan Ridoy
  * @since 2022-10-15
  */
 class Shurjopay
@@ -57,7 +59,7 @@ class Shurjopay
     public function makePayment(PaymentRequest $payload)
     {
         $ShurjopayValidation = new ShurjopayValidation();
-       
+
 
         if (!$ShurjopayValidation->checkInternetConnection()) {
 
@@ -67,7 +69,7 @@ class Shurjopay
 
         $trxn_data = $this->prepareTransactionPayload($payload);
         #All data from payload in trxn_data as array.
-        
+
         if ($ShurjopayValidation->Validation($trxn_data)) {
             $header = array(
                 'Content-Type:application/json',
@@ -85,8 +87,36 @@ class Shurjopay
                 } else {
                     return $response; //object
                 }
-            } catch (\Exception $e) {
-                return $e->getMessage();
+            }
+            # Catching ShurjopayException custom exception and throwing it to ShurjopayException
+            catch (ShurjopayException $e) {
+                $this->sp_log("ShurjopayException occured in makePayment()!" . ". \n" . $e->getMessage());
+                throw new ShurjopayException("Please solve the issue to make your payment,first", 0, $e);
+            }
+            # Catching BadMethodCallException custom exception and throwing it to ShurjopayException
+            catch (\BadMethodCallException $e) {
+                $this->sp_log("BadMethodCallException occured in makePayment()!" . ". \n" . $e->getMessage());
+                throw new ShurjopayException("Please solve the issue to make your payment,first", 0, $e);
+            }
+            # Catching ArgumentCountError custom exception and throwing it to ShurjopayException
+            catch (\ArgumentCountError $e) {
+                $this->sp_log("ArgumentCountError occured in makePayment()!" . ". \n" . $e->getMessage());
+                throw new ShurjopayException("Please solve the issue to make your payment,first", 0, $e);
+            }
+            # Catching InvalidArgumentException custom exception and throwing it to ShurjopayException
+            catch (\InvalidArgumentException $e) {
+                $this->sp_log("InvalidArgumentException occured in makePayment()!" . ". \n" . $e->getMessage());
+                throw new ShurjopayException("Please solve the issue to make your payment,first", 0, $e);
+            }
+            # Catching mother exception if child exception class doesn't catch
+            catch (\Exception $e) {
+                $this->sp_log("Fatal error occured in makePayment()!" . ". \n" . $e->getMessage());
+                throw new ShurjopayException("Please solve the issue to make your payment,first", 0, $e);
+            }
+            # Catching fatal error if problem doesn't belongs in exception class
+            catch (\Error $e) {
+                $this->sp_log("Fatal error occured in makePayment()!" . ". \n" . $e->getMessage());
+                throw new ShurjopayException("Please solve the issue to make your payment,first", 0, $e);
             }
         }
     }
@@ -115,9 +145,36 @@ class Shurjopay
             $response = $this->getHttpResponse($this->verification_url, 'POST', $postFields, $header);
             $this->sp_log("Payment verification for " . $shurjopay_order_id . " was done successfully");
             return $response;
-        } catch (\Exception $e) {
-            $this->sp_log("Invalid order id: " . $shurjopay_order_id . ". \n" . $e->getMessage());
-            return $e->getMessage();
+        }
+        # Catching ShurjopayException custom exception and throwing it to ShurjopayException
+        catch (ShurjopayException $e) {
+            $this->sp_log("ShurjopayException occured in verifyPayment()!" . ". \n" . $e->getMessage());
+            throw new ShurjopayException("Please solve the issue to make your payment,first", 0, $e);
+        }
+        # Catching BadMethodCallException custom exception and throwing it to ShurjopayException
+        catch (\BadMethodCallException $e) {
+            $this->sp_log("BadMethodCallException occured in verifyPayment()!" . ". \n" . $e->getMessage());
+            throw new ShurjopayException("Please solve the issue to make your payment,first", 0, $e);
+        }
+        # Catching ArgumentCountError custom exception and throwing it to ShurjopayException
+        catch (\ArgumentCountError $e) {
+            $this->sp_log("ArgumentCountError occured in verifyPayment()!" . ". \n" . $e->getMessage());
+            throw new ShurjopayException("Please solve the issue to make your payment,first", 0, $e);
+        }
+        # Catching InvalidArgumentException custom exception and throwing it to ShurjopayException
+        catch (\InvalidArgumentException $e) {
+            $this->sp_log("InvalidArgumentException occured in verifyPayment()!" . ". \n" . $e->getMessage());
+            throw new ShurjopayException("Please solve the issue to make your payment,first", 0, $e);
+        }
+        # Catching mother exception if child exception class doesn't catch
+        catch (\Exception $e) {
+            $this->sp_log("Fatal error occured in verifyPayment()!" . ". \n" . $e->getMessage());
+            throw new ShurjopayException("Please solve the issue to make your payment,first", 0, $e);
+        }
+        # Catching fatal error if problem doesn't belongs in exception class
+        catch (\Error $e) {
+            $this->sp_log("Fatal error occured in verifyPayment()!" . ". \n" . $e->getMessage());
+            throw new ShurjopayException("Please solve the issue to make your payment,first", 0, $e);
         }
     }
 
@@ -195,9 +252,38 @@ class Shurjopay
             );
             $response = curl_exec($curl);
             return (json_decode($response));
-        } catch (\Exception $e) {
-            $this->sp_log("Shurjopay plugin has failed to initialize Curl! \n" . $e->getMessage());
-        } finally {
+        }
+        # Catching ShurjopayException custom exception and throwing it to ShurjopayException
+        catch (ShurjopayException $e) {
+            $this->sp_log("ShurjopayException occured in getHttpResponse()!".". \n" . $e->getMessage());
+            throw new ShurjopayException("Please solve the issue to make your payment,first",0,$e);
+        }
+        # Catching BadMethodCallException custom exception and throwing it to ShurjopayException
+        catch (\BadMethodCallException $e) {
+            $this->sp_log("BadMethodCallException occured in getHttpResponse()!".". \n" . $e->getMessage());
+            throw new ShurjopayException("Please solve the issue to make your payment,first",0,$e);
+        }
+        # Catching ArgumentCountError custom exception and throwing it to ShurjopayException
+        catch (\ArgumentCountError $e) {
+            $this->sp_log("ArgumentCountError occured in getHttpResponse()!". ". \n" . $e->getMessage());
+            throw new ShurjopayException("Please solve the issue to make your payment,first",0,$e);
+        }
+        # Catching InvalidArgumentException custom exception and throwing it to ShurjopayException
+        catch (\InvalidArgumentException $e) {
+            $this->sp_log("InvalidArgumentException occured in getHttpResponse()!".". \n" . $e->getMessage());
+            throw new ShurjopayException("Please solve the issue to make your payment,first",0,$e);
+        }
+        # Catching mother exception if child exception class doesn't catch
+        catch (\Exception $e) {
+            $this->sp_log("Fatal error occured in getHttpResponse()!".". \n" . $e->getMessage());
+            throw new ShurjopayException("Please solve the issue to make your payment,first",0,$e);
+        }
+        # Catching fatal error if problem doesn't belongs in exception class
+        catch (\Error $e) {
+            $this->sp_log("Fatal error occured in getHttpResponse()!". ". \n" . $e->getMessage());
+            throw new ShurjopayException("Please solve the issue to make your payment,first",0,$e);
+        }
+        finally {
             curl_close($curl);
         }
         return null;
@@ -208,24 +294,47 @@ class Shurjopay
         /**-Function-sp_log
         This function is used to create log and make derectory if not exist.
          */
-        
-            try {
-                #file_put_contents takes care of opening the file, writing the contents, and closing the file.
-                $log_file_data = SP_LOG_LOCATION.'/shurjoPay-plugin.log';
-                $log_msg_first = gmdate('Y-m-d H:i:s') . " ShurjopayPlugin: " . $log_msg;
 
-                if (!file_exists(SP_LOG_LOCATION))
-                {
-                    mkdir(SP_LOG_LOCATION,0755,true);
-                    file_put_contents($log_file_data, $log_msg_first . "\n", FILE_APPEND);
-                }
+        try {
+            #file_put_contents takes care of opening the file, writing the contents, and closing the file.
+            $log_file_data = SP_LOG_LOCATION . '/shurjoPay-plugin.log';
+            $log_msg_first = gmdate('Y-m-d H:i:s') . " ShurjopayPlugin: " . $log_msg;
 
+            if (!file_exists(SP_LOG_LOCATION)) {
+                mkdir(SP_LOG_LOCATION, 0755, true);
                 file_put_contents($log_file_data, $log_msg_first . "\n", FILE_APPEND);
-            } catch (\Exception $e) {
-
-                return $e->getMessage();
             }
-        
+
+            file_put_contents($log_file_data, $log_msg_first . "\n", FILE_APPEND);
+        } # Catching ShurjopayException custom exception and throwing it to ShurjopayException
+        catch (ShurjopayException $e) {
+            $this->sp_log("ShurjopayException occured in sp_log()!".". \n" . $e->getMessage());
+            throw new ShurjopayException("Please solve the issue to make your payment,first",0,$e);
+        }
+        # Catching BadMethodCallException custom exception and throwing it to ShurjopayException
+        catch (\BadMethodCallException $e) {
+            $this->sp_log("BadMethodCallException occured in sp_log()!".". \n" . $e->getMessage());
+            throw new ShurjopayException("Please solve the issue to make your payment,first",0,$e);
+        }
+        # Catching ArgumentCountError custom exception and throwing it to ShurjopayException
+        catch (\ArgumentCountError $e) {
+            $this->sp_log("ArgumentCountError occured in sp_log()!". ". \n" . $e->getMessage());
+            throw new ShurjopayException("Please solve the issue to make your payment,first",0,$e);
+        }
+        # Catching InvalidArgumentException custom exception and throwing it to ShurjopayException
+        catch (\InvalidArgumentException $e) {
+            $this->sp_log("InvalidArgumentException occured in sp_log()!".". \n" . $e->getMessage());
+            throw new ShurjopayException("Please solve the issue to make your payment,first",0,$e);
+        }
+        # Catching mother exception if child exception class doesn't catch
+        catch (\Exception $e) {
+            $this->sp_log("Fatal error occured in sp_log()!".". \n" . $e->getMessage());
+            throw new ShurjopayException("Please solve the issue to make your payment,first",0,$e);
+        }
+        # Catching fatal error if problem doesn't belongs in exception class
+        catch (\Error $e) {
+            $this->sp_log("Fatal error occured in sp_log()!". ". \n" . $e->getMessage());
+            throw new ShurjopayException("Please solve the issue to make your payment,first",0,$e);
+        }
     }
-    
 }

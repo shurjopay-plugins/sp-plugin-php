@@ -1,10 +1,10 @@
 {
     "name": "shurjomukhi/shurjopay-plugin-php",
-    "description": "shurjopay is a online payment gateway and easy payment solution",
+    "description": "shurjoPay is a online payment gateway and easy payment solution",
     "type": "library",
     "version": "2.1.0",
     "license": "MIT",
-    "keywords": ["php","laravel","shurjopay","shurjomukhi","shurjopay-plugin","payment-gateway","payments","codeigniter","symphony"],
+    "keywords": ["php","laravel","shurjoPay","shurjopay","shurjomukhi","shurjopay-plugin","payment-gateway","payments","codeigniter","symphony","sp-plugin-php","sp-plugin-laravel","Shurjopay"],
     "autoload": {
         "psr-4": {
             "ShurjopayPlugin\\": "src/"
