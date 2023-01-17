@@ -1,0 +1,5 @@
+SP_USERNAME=sp_sandbox
+SP_PASSWORD=pyyk97hu&6u6
+SP_PREFIX=NOK
+SHURJOPAY_API=https://sandbox.shurjopayment.com/
+SP_CALLBACK=http://localhost/php-app-php-plugin/return.php

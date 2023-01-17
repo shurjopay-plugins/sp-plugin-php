@@ -1,5 +1,6 @@
 <?php
 namespace ShurjopayPlugin;
+
 /**
  *
  * PHP Plug-in service to provide shurjoPay get way services.
@@ -7,13 +8,14 @@ namespace ShurjopayPlugin;
  * @author Md Wali Mosnad Ayshik
  * @since 2022-10-15
  */
-/**
- * Prepare a method for checking internet connection from client-side
- *
- * @return bool $is_conn
- */
 class ShurjopayValidation
 {
+
+    /**
+     * Prepare a method for checking internet connection from client-side
+     *
+     * @return bool $is_conn
+     */
     function checkInternetConnection()
     {
         $connected = @fsockopen('www.google.com', 80);
@@ -127,4 +129,3 @@ class ShurjopayValidation
         }
     }
 }
-?>
