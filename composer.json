@@ -4,7 +4,17 @@
     "type": "library",
     "version": "2.1.0",
     "license": "MIT",
-    "keywords": ["php","laravel","shurjoPay","shurjopay","shurjomukhi","shurjopay-plugin","payment-gateway","payments","codeigniter","symphony","sp-plugin-php","sp-plugin-laravel","Shurjopay"],
+    "keywords": [
+        "php",
+        "laravel",
+        "shurjopay",
+        "shurjomukhi",
+        "shurjopay-plugin",
+        "payment-gateway",
+        "payments",
+        "codeigniter",
+        "symphony"
+    ],
     "autoload": {
         "psr-4": {
             "ShurjopayPlugin\\": "src/"
@@ -12,7 +22,7 @@
     },
     "authors": [
         {
-            "name": "Shurjomukhi Ltd",
+            "name": "Shurjomukhi Plugin Devs",
             "email": "plugindev@shurjomukhi.com.bd"
         },
         {
@@ -25,6 +35,6 @@
             "email": "redoy@shurjomukhisolutions.com.bd",
             "role": "Software Engineer"
         }
-     ],
+    ],
     "require": {}
 }

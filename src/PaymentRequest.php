@@ -1,5 +1,7 @@
 <?php
+
 namespace ShurjopayPlugin;
+
 /**
  * PHP plugin class PaymentRequest to store payload values.
  *
