@@ -38,38 +38,46 @@ OR
 
 #### Step 1: Download the plugin from [shurjoPay-Plugins-PHP](https://github.com/shurjopay-plugins/sp-plugin-php)<br><br>
 
-#### Step 2: Setup configuration parameters for shurjopay plugin correctly in your application.
+#### Step 2: Setup configuration parameters for shurjopay plugin in correctly in your application.
 
 <!-- e.g. SP_USERNAME, SP_PASSWORD, SP_PREFIX for the order id, SHURJOPAY_API, SP_CALLBACK and SP_LOG_LOCATION.<br /> -->
-* Inside the [shurjoPay-Plugins-PHP](https://github.com/shurjopay-plugins/sp-plugin-php), <b>ShurjopayConfig.php</b> is provided with shurjoPay sandbox(test) credentials.<br />
-* Provide your live credentials in <b>ShurjopayConfig.php</b> before going live.
+* Create a `.env` file inside your project's root directory. Here is a sample .env configuration, `.env` is provided with shurjoPay sandbox(test) credentials.<br />
+* Provide your live credentials in <b>`.env`</b> before going live.
 ```PHP
 # shurjopay merchant username
-define('SP_USERNAME', 'sp_sandbox', false);
+SP_USERNAME='sp_sandbox'
 # shurjopay merchant password
-define('SP_PASSWORD', 'pyyk97hu&6u6', false);
+SP_PASSWORD='pyyk97hu&6u6'
 # Merchant prefix used to generate order id
-define('SP_PREFIX', 'NOK', false);
+SP_PREFIX='NOK'
 # shurjopay payment gateway API endpoint
-define('SHURJOPAY_API', 'https://sandbox.shurjopayment.com/', false);
+SHURJOPAY_API='https://sandbox.shurjopayment.com'
 # URL to redirect after completion of a payment
-define('SP_CALLBACK', 'https://sandbox.shurjopayment.com/response', false);
+SP_CALLBACK='https://sandbox.shurjopayment.com/response'
 # Log location of shurjopay php plugin
-define('SP_LOG_LOCATION', 'shurjoPay-plugin-log/', false);
+SP_LOG_LOCATION='shurjoPay-plugin-log'
+# CURLOPT_SSL_VERIFYPEER=0 for Http(local server) and CURLOPT_SSL_VERIFYPEER= 1 Https(live server)
+CURLOPT_SSL_VERIFYPEER=1
 ```
 
 #### Step 3: Use the namespace and require_once from package in your code as necessary and initiate payment method.
 
 ```PHP
+use ShurjopayPlugin\ShurjopayEnvReader;
 use ShurjopayPlugin\Shurjopay;
 use ShurjopayPlugin\PaymentRequest;
 
-require_once '(According to package location)/Shurjopay.php';
-require_once '(According to package location)/PaymentRequest.php';
+require_once __DIR__ . '/src/ShurjopayEnvReader.php';
+require_once __DIR__ . '/src/Shurjopay.php';
+require_once __DIR__ . '/src/PaymentRequest.php';
 ```
 
 ```PHP
-$sp_instance = new Shurjopay();
+# Initialize your .env path directory.
+$env = new ShurjopayEnvReader(__DIR__ . '/_env');
+$conf = $env->getConfig();
+# Shurjopay to connect and integrate with shurjoPay payment gateway API.
+$sp_instance = new Shurjopay($conf);
 $request = new PaymentRequest();
 # All the data will come from user end.
 $request->currency = 'BDT';
@@ -105,10 +113,17 @@ Checkout this [PHP project](https://github.com/shurjopay-plugins/sp-plugin-usage
 #### Step 1: Use the namespace and require_once from package in your code for payment verification.
 ```PHP
 use ShurjopayPlugin\Shurjopay;
+use ShurjopayPlugin\ShurjopayEnvReader;
 
-require_once '(According to package location)/Shurjopay.php';
+require_once __DIR__ . '/src/Shurjopay.php';
+require_once __DIR__ . '/src/ShurjopayEnvReader.php';
 ```
 ```PHP
+# Initialize your .env path directory.
+$env = new ShurjopayEnvReader(__DIR__ . '/_env');
+$conf = $env->getConfig();
+$sp_instance = new Shurjopay($conf);
+# Call verifyPayment with shurjopay_order_id for payment verification.
 $shurjopay_order_id = trim($_REQUEST['order_id']);
 $response_data = json_decode(json_encode($sp_instance->verifyPayment($shurjopay_order_id)));
 ```
