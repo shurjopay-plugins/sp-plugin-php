@@ -1,0 +1,20 @@
+/** shurjopay merchant username */
+SP_USERNAME=sp_sandbox
+
+/** shurjopay merchant password */
+SP_PASSWORD=pyyk97hu&6u6
+
+/** Merchant prefix used to generate order id */
+SP_PREFIX=NOK
+
+/** shurjopay payment gateway API endpoint */
+SHURJOPAY_API=https://sandbox.shurjopayment.com
+
+/** URL to redirect after completion of a payment */
+SP_CALLBACK=http://localhost/php-app-php-plugin/return.php
+
+/** Log location of shurjopay php plugin */
+SP_LOG_LOCATION=shurjoPay-plugin-log
+
+/** For testing in local environment set CURLOPT_SSL_VERIFYPEER => 0*/
+CURLOPT_SSL_VERIFYPEER = 1,
