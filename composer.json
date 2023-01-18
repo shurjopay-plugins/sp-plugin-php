@@ -2,7 +2,7 @@
     "name": "shurjomukhi/shurjopay-plugin-php",
     "description": "shurjoPay is a online payment gateway and easy payment solution",
     "type": "library",
-    "version": "2.1.0",
+    "version": "0.1.0",
     "license": "MIT",
     "keywords": [
         "php",
@@ -18,6 +18,11 @@
     "autoload": {
         "psr-4": {
             "ShurjopayPlugin\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
         }
     },
     "authors": [
