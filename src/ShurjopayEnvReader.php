@@ -61,6 +61,7 @@ class ShurjopayEnvReader
         $config->callback_url = getenv('SP_CALLBACK');
         $config->log_path = getenv('SP_LOG_LOCATION');
         $config->order_prefix = getenv('SP_PREFIX');
+        $config->ssl_verifypeer = getenv('CURLOPT_SSL_VERIFYPEER');
 
         return $config;
     }
