@@ -29,8 +29,7 @@ This document is intended for the developers and technical personnel of merchant
 
 To integrate the shurjoPay Payment Gateway in your PHP project do the following tasks sequentially.
 
-#### Add the shurjopay-plugin-php as your project dependency. Open the project's ``composer.json`` file and add the follwing line in ``require`` block.
-
+#### Run below command to install plugin .
 ```
 "shurjomukhi/shurjopay-plugin-php":"^0.1.0"
 ```
