@@ -16,12 +16,12 @@ This document describes how to use and integrate the ``shurjopay-plugin-php`` pa
 
 #### Add the shurjopay-plugin-php as your project dependency.
 ```shell
-$ composer require shurjomukhi/shurjopay-plugin-php:^0.1.0
+$ composer require shurjomukhi/shurjopay-plugin-php:^0.1.1
 ```
 
 ##### 📝 _To use the latest version of this package from **github**, add the below line in ``require`` block._
 ```
-"shurjomukhi/shurjopay-plugin-php":"dev-main"
+"shurjomukhi/shurjopay-plugin-php":"dev-dev"
 ``` 
 Also remember to add the repository line in ``composer.json``.
 ```
