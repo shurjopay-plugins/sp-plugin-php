@@ -225,7 +225,7 @@ class Shurjopay
 
         try {
             #file_put_contents takes care of opening the file, writing the contents, and closing the file.
-            $log_file_data = $this->conf->log_path . '/shurjoPay-plugin.log';
+            $log_file_data = $this->conf->log_path . '/shurjopay-plugin.log';
             $log_msg = gmdate('Y-m-d H:i:s') . " ShurjopayPlugin: " . $log_msg;
 
             if (!file_exists($this->conf->log_path)) {

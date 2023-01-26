@@ -29,11 +29,11 @@ This document is intended for the developers and technical personnel of merchant
 
 To integrate the shurjoPay Payment Gateway in your PHP project do the following tasks sequentially.
 
-#### Add the shurjopay-plugin-php as your project dependency. Open the project's ``composer.json`` file and add the follwing line in ``require`` block.
+#### Add the shurjopay-plugin-php as your project dependency.
+```shell
+$ composer require shurjomukhi/shurjopay-plugin-php:^0.1.0
+```
 
-```
-"shurjomukhi/shurjopay-plugin-php":"^0.1.0"
-```
 #### Setup parameters for shurjopay plugin correctly in your application in a config file as shown below.
 
 ```PHP
@@ -48,7 +48,7 @@ SHURJOPAY_API='https://sandbox.shurjopayment.com'
 # URL to redirect after completion of a payment. Sample: https://sandbox.shurjopayment.com/response
 SP_CALLBACK='http://localhost/your-php-app/return.php'
 # Log location of shurjopay php plugin
-SP_LOG_LOCATION='shurjoPay-plugin-log'
+SP_LOG_LOCATION='/var/log/shurjopay'
 # CURLOPT_SSL_VERIFYPEER=0 only for local and non-SSL environment 
 CURLOPT_SSL_VERIFYPEER=1
 ```
