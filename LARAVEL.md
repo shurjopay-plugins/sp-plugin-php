@@ -21,7 +21,7 @@ $ composer require shurjomukhi/shurjopay-plugin-php:^0.1.1
 
 ##### 📝 _To use the latest version of this package from **github**, add the below line in ``require`` block._
 ```
-"shurjomukhi/shurjopay-plugin-php":"dev-dev"
+"shurjomukhi/shurjopay-plugin-php":"^0.1.1"
 ``` 
 Also remember to add the repository line in ``composer.json``.
 ```
