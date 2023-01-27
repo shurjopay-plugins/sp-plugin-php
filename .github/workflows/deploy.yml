@@ -1,0 +1,14 @@
+name: Deploy PHP package to packagist
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: mnavarrocarter/packagist-update@v1.0.0
+       with:
+         username: "shurjopay-dev"
+         api_token: ${{ secrets.PACKAGIST_TOKEN }}

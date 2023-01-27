@@ -31,7 +31,7 @@ To integrate the shurjoPay Payment Gateway in your PHP project do the following 
 
 #### Add the shurjopay-plugin-php as your project dependency.
 ```shell
-$ composer require shurjomukhi/shurjopay-plugin-php:^0.1.0
+$ composer require shurjomukhi/shurjopay-plugin-php
 ```
 
 #### Setup parameters for shurjopay plugin correctly in your application in a config file as shown below.
