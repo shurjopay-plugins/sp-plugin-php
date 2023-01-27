@@ -12,3 +12,4 @@ jobs:
         with:
           username: "shurjopay-dev"
           api_token: ${{ secrets.PACKAGIST_TOKEN }}
+          package_name: shurjomukhi/shurjopay-plugin-php
