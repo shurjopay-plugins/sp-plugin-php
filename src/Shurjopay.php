@@ -137,7 +137,7 @@ class Shurjopay
                 'amount' => $payload->amount,
                 # Order information
                 'order_id' => $this->conf->order_prefix . uniqid(),
-                'discsount_amount' => $payload->discountAmount,
+                'discount_amount' => $payload->discountAmount,
                 'disc_percent' => $payload->discPercent,
                 # Customer information
                 'client_ip' => $this->getClientIpOrHost(),

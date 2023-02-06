@@ -50,12 +50,6 @@ class ShurjopayValidation
             'Amount',
             $payload_data->amount
         ) && $this->emptyCheck(
-            'Discount Amount',
-            $payload_data->discsount_amount
-        ) && $this->emptyCheck(
-            'Discount percentage',
-            $payload_data->disc_percent
-        ) && $this->emptyCheck(
             'Customer Name',
             $payload_data->customer_name
         ) && $this->emptyCheck(
